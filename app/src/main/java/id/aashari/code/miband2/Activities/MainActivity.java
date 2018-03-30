@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
 
     Boolean isListeningHeartRate = false;
 
+    public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
+    public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
     BluetoothAdapter bluetoothAdapter;
     BluetoothGatt bluetoothGatt;
     BluetoothDevice bluetoothDevice;
@@ -39,6 +41,8 @@ public class MainActivity extends Activity {
     Button btnStartConnecting, btnGetBatteryInfo, btnGetHeartRate, btnWalkingInfo, btnStartVibrate, btnStopVibrate;
     EditText txtPhysicalAddress;
     TextView txtState, txtByte;
+    private String mDeviceName;
+    private String mDeviceAddress;
 
 
     @Override
@@ -55,6 +59,11 @@ public class MainActivity extends Activity {
     }
 
     void getBoundedDevice() {
+
+        mDeviceName = getIntent().getStringExtra(EXTRAS_DEVICE_NAME);
+        mDeviceAddress = getIntent().getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        txtPhysicalAddress.setText(mDeviceAddress);
+
         Set<BluetoothDevice> boundedDevice = bluetoothAdapter.getBondedDevices();
         for (BluetoothDevice bd : boundedDevice) {
             if (bd.getName().contains("MI Band 2")) {
